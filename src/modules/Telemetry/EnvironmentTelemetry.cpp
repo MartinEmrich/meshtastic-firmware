@@ -319,8 +319,10 @@ int32_t EnvironmentTelemetryModule::runOnce()
                 result = ina260Sensor.runOnce();
             if (ina3221Sensor.hasSensor())
                 result = ina3221Sensor.runOnce();
+#if !MESHTASTIC_EXCLUDE_I2C
             if (max17048Sensor.hasSensor())
                 result = max17048Sensor.runOnce();
+#endif
                 // this only works on the wismesh hub with the solar option. This is not an I2C sensor, so we don't need the
                 // sensormap here.
 #ifdef HAS_RAKPROT
@@ -580,10 +582,12 @@ bool EnvironmentTelemetryModule::getEnvironmentTelemetry(meshtastic_Telemetry *m
         valid = valid && ina3221Sensor.getMetrics(m);
         hasSensor = true;
     }
+#if !MESHTASTIC_EXCLUDE_I2C
     if (max17048Sensor.hasSensor()) {
         valid = valid && max17048Sensor.getMetrics(m);
         hasSensor = true;
     }
+#endif
 #endif
 #ifdef HAS_RAKPROT
     valid = valid && rak9154Sensor.getMetrics(m);
@@ -710,11 +714,13 @@ AdminMessageHandleResult EnvironmentTelemetryModule::handleAdminMessageForModule
         if (result != AdminMessageHandleResult::NOT_HANDLED)
             return result;
     }
+#if !MESHTASTIC_EXCLUDE_I2C
     if (max17048Sensor.hasSensor()) {
         result = max17048Sensor.handleAdminMessage(mp, request, response);
         if (result != AdminMessageHandleResult::NOT_HANDLED)
             return result;
     }
+#endif
 #endif
     return result;
 }

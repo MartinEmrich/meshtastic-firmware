@@ -1,6 +1,6 @@
 #include "configuration.h"
 
-#if !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR && __has_include("Adafruit_PM25AQI.h")
+#if !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR && __has_include("Adafruit_PM25AQI.h") && !MESHTASTIC_EXCLUDE_I2C
 
 #pragma once
 #include "../mesh/generated/meshtastic/telemetry.pb.h"

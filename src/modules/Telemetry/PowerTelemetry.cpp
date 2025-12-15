@@ -73,8 +73,10 @@ int32_t PowerTelemetryModule::runOnce()
                 result = ina260Sensor.isInitialized() ? 0 : ina260Sensor.runOnce();
             if (ina3221Sensor.hasSensor())
                 result = ina3221Sensor.isInitialized() ? 0 : ina3221Sensor.runOnce();
+#if !MESHTASTIC_EXCLUDE_I2C
             if (max17048Sensor.hasSensor())
                 result = max17048Sensor.isInitialized() ? 0 : max17048Sensor.runOnce();
+#endif
         }
 
         // it's possible to have this module enabled, only for displaying values on the screen.
@@ -207,8 +209,10 @@ bool PowerTelemetryModule::getPowerTelemetry(meshtastic_Telemetry *m)
         valid = ina260Sensor.getMetrics(m);
     if (ina3221Sensor.hasSensor())
         valid = ina3221Sensor.getMetrics(m);
+#if !MESHTASTIC_EXCLUDE_I2C
     if (max17048Sensor.hasSensor())
         valid = max17048Sensor.getMetrics(m);
+#endif
 #endif
 
     return valid;

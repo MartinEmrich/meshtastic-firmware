@@ -221,7 +221,7 @@ bool pauseBluetoothLogging = false;
 
 bool pmu_found;
 
-#if !MESHTASTIC_EXCLUDE_I2C
+#if !MESHTASTIC_EXCLUDE_I2C || !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR
 // Array map of sensor types with i2c address and wire as we'll find in the i2c scan
 std::pair<uint8_t, TwoWire *> nodeTelemetrySensorsMap[_meshtastic_TelemetrySensorType_MAX + 1] = {};
 #endif
