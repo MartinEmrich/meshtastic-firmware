@@ -169,7 +169,7 @@ void esp32Setup()
 // #define APP_WATCHDOG_SECS 45
 #define APP_WATCHDOG_SECS 90
 
-#ifdef CONFIG_IDF_TARGET_ESP32C6
+#if defined(CONFIG_IDF_TARGET_ESP32C6) || defined(PIOARDUINO_ESP32)
     esp_task_wdt_config_t *wdt_config = (esp_task_wdt_config_t *)malloc(sizeof(esp_task_wdt_config_t));
     wdt_config->timeout_ms = APP_WATCHDOG_SECS * 1000;
     wdt_config->trigger_panic = true;
