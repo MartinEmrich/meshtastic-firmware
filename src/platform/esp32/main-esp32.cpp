@@ -162,8 +162,6 @@ void esp32Setup()
     WiFiOTA::initialize();
 #endif
 
-    // enableModemSleep();
-
 // Since we are turning on watchdogs rather late in the release schedule, we really don't want to catch any
 // false positives.  The wait-to-sleep timeout for shutting down radios is 30 secs, so pick 45 for now.
 // #define APP_WATCHDOG_SECS 45
@@ -186,6 +184,12 @@ void esp32Setup()
 #endif
     res = esp_task_wdt_add(NULL);
     assert(res == ESP_OK);
+
+#ifdef PIOARDUINO_ESP32
+    // running this before esp_task_wdt_init() does not work. saves another 5mA.
+    // was commented out before, so just enable with pioarduino on esp32.
+    enableModemSleep();
+#endif
 
 #if HAS_32768HZ
     enableSlowCLK();
