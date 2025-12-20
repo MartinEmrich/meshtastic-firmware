@@ -1,7 +1,10 @@
 # Heltec V4 "Low Power"
 
 Trying to use newer ESP32 libraries/tools/platforms/whatever
-to enable ESP32 power saving features
+to enable ESP32 power saving features.
+
+/!\ For whatever reason, after `pio upload` the device does not boot right away.
+    Connecting to serial or pushing reset is needed.
 
 ## Pioarduino
 
