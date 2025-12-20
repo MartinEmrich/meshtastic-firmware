@@ -42,6 +42,10 @@ Compilation"-produced directories `managed_components`, `.dummy` and files like
 * `Syslog` class conflicts with a class with the same name in some dependency.
   -> Relocated in `meshtastic::` namespace.
 
+* BLE seems to no longer work after https://github.com/meshtastic/firmware/commit/40f1f91c0d6b7ff859fbbf4d67511000548d74ee
+  (Upgrade to Nimble 2.x). Device appears, but phone cannot connect.
+  -> Rebased on the last commit before restored BLE functionality.
+
 ### Open/Looming
 
 * Lot's of "redefined" warnings around Nimble Bluetooth config options. I
