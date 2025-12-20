@@ -49,3 +49,5 @@ Compilation"-produced directories `managed_components`, `.dummy` and files like
   (conflicting) Nimble Bluetooth instances.
 * Had to put a `default_16MB.csv` partition table here. Not clear why and which,
   pulled one from esp-idf.
+* When DFS is enabled (Dynamic Frequency Scaling) via sdkconfig `CONFIG_PM_DFS_INIT_AUTO=y`,
+  connecting the phone app via BLE no longer works (device still shows up).
