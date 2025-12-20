@@ -27,6 +27,10 @@ struct ButtonConfig {
     explicit ButtonConfig(uint8_t pin = 0) : pinNumber(pin) {}
 };
 
+#ifndef BUTTON_THREAD_INTERVAL_MS
+#define BUTTON_THREAD_INTERVAL_MS 100
+#endif
+
 #ifndef BUTTON_CLICK_MS
 #define BUTTON_CLICK_MS 250
 #endif
