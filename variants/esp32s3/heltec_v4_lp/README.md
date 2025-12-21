@@ -1,5 +1,7 @@
 # Heltec V4 "Low Power"
 
+(... and Heltec V3 in `../heltec_v3_lp`)
+
 Trying to use newer ESP32 libraries/tools/platforms/whatever
 to enable ESP32 power saving features.
 
