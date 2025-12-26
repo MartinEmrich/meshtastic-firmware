@@ -171,6 +171,9 @@ void esp32Setup()
     esp_task_wdt_config_t *wdt_config = (esp_task_wdt_config_t *)malloc(sizeof(esp_task_wdt_config_t));
     wdt_config->timeout_ms = APP_WATCHDOG_SECS * 1000;
     wdt_config->trigger_panic = true;
+#ifdef PIOARDUINO_ESP32
+    wdt_config->idle_core_mask = (1 << CONFIG_FREERTOS_NUMBER_OF_CORES) - 1;
+#endif
     res = esp_task_wdt_init(wdt_config);
     if (res == ESP_ERR_INVALID_STATE) {
       // With PIOARDUINO_ESP32, this happens...
