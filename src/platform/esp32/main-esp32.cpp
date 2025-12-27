@@ -162,18 +162,24 @@ void esp32Setup()
     WiFiOTA::initialize();
 #endif
 
-    // enableModemSleep();
-
 // Since we are turning on watchdogs rather late in the release schedule, we really don't want to catch any
 // false positives.  The wait-to-sleep timeout for shutting down radios is 30 secs, so pick 45 for now.
 // #define APP_WATCHDOG_SECS 45
 #define APP_WATCHDOG_SECS 90
 
-#ifdef CONFIG_IDF_TARGET_ESP32C6
+#if defined(CONFIG_IDF_TARGET_ESP32C6) || defined(PIOARDUINO_ESP32)
     esp_task_wdt_config_t *wdt_config = (esp_task_wdt_config_t *)malloc(sizeof(esp_task_wdt_config_t));
     wdt_config->timeout_ms = APP_WATCHDOG_SECS * 1000;
     wdt_config->trigger_panic = true;
+#ifdef PIOARDUINO_ESP32
+    wdt_config->idle_core_mask = (1 << CONFIG_FREERTOS_NUMBER_OF_CORES) - 1;
+#endif
     res = esp_task_wdt_init(wdt_config);
+    if (res == ESP_ERR_INVALID_STATE) {
+      // With PIOARDUINO_ESP32, this happens...
+      LOG_WARN("ESP Task watchdog was already initialized, TODO: find out why");
+      res = esp_task_wdt_reconfigure(wdt_config);
+    }
     assert(res == ESP_OK);
 #else
     res = esp_task_wdt_init(APP_WATCHDOG_SECS, true);
@@ -181,6 +187,12 @@ void esp32Setup()
 #endif
     res = esp_task_wdt_add(NULL);
     assert(res == ESP_OK);
+
+#ifdef PIOARDUINO_ESP32
+    // running this before esp_task_wdt_init() does not work. saves another 5mA.
+    // was commented out before, so just enable with pioarduino on esp32.
+    enableModemSleep();
+#endif
 
 #if HAS_32768HZ
     enableSlowCLK();
