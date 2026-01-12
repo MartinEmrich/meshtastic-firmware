@@ -1,6 +1,6 @@
 #ifdef PIOARDUINO_ESP32
-#include <driver/adc_types_legacy.h>
 #include <driver/adc.h>
+#include <driver/adc_types_legacy.h>
 #endif
 
 #define BATTERY_PIN 35

@@ -176,9 +176,9 @@ void esp32Setup()
 #endif
     res = esp_task_wdt_init(wdt_config);
     if (res == ESP_ERR_INVALID_STATE) {
-      // With PIOARDUINO_ESP32, this happens...
-      LOG_WARN("ESP Task watchdog was already initialized, TODO: find out why");
-      res = esp_task_wdt_reconfigure(wdt_config);
+        // With PIOARDUINO_ESP32, this happens...
+        LOG_WARN("ESP Task watchdog was already initialized, TODO: find out why");
+        res = esp_task_wdt_reconfigure(wdt_config);
     }
     assert(res == ESP_OK);
 #else
